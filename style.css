@@ -1,0 +1,89 @@
+/***************************** Wireframe styles */
+.border {
+  border: solid black 3px;
+}
+
+.bg-dark {
+  background-color: lightslategray;
+}
+
+.bg-light {
+  background-color: lightgray;
+}
+
+.center {
+  text-align: center;
+  justify-content: center;
+  width: 95%;
+  margin: auto;
+}
+
+.max-width {
+  max-width: 600px;
+  margin: auto;
+}
+
+.currentScore {
+  padding-bottom: .7em;
+  margin-bottom: .4em;
+}
+
+.indie-flower {
+  font-family: 'Indie Flower', cursive;
+  font-weight: bold;
+}
+
+.cursive {
+  font-family: 'Permanent Marker', cursive;
+}
+
+hr {
+  width: 80%;
+}
+
+h1 {
+  margin-bottom: 0;
+}
+
+header h3 {
+  margin-top: 0;
+}
+
+.top-and-bottom-padding {
+  padding: .3em 0 .3em 0;
+}
+
+footer div {
+  margin-top: .4em;
+  margin-bottom: .4em;
+}
+
+body html {
+  height: 100%;
+}
+
+.bg {
+  background-image: url("images/background-pepper-pile-2.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+}
+
+@media all and (min-width: 550px) {
+  .question-and-answers {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: .3em;
+  }
+
+  .item {
+    flex: 1;
+  }
+
+  body {
+    max-width: 700px;
+    margin: auto;
+  }
+}
