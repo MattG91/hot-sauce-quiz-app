@@ -1,6 +1,18 @@
 /***************************** Wireframe styles */
+.answer-form {
+  visibility: hidden;
+}
+
 .border {
   border: solid black 3px;
+}
+
+.hide {
+  display: none;
+}
+
+fieldset {
+  border: 0px;
 }
 
 .bg-dark {
@@ -16,6 +28,23 @@
   justify-content: center;
   width: 95%;
   margin: auto;
+}
+
+.block {
+  display: block;
+}
+
+ul {
+  padding-left: 0;
+}
+
+.innerCenter {
+  width: 40%;
+}
+
+.text-left {
+  justify-content: flex-start;
+  text-align: left;
 }
 
 .max-width {
@@ -60,6 +89,10 @@ footer div {
 
 body html {
   height: 100%;
+}
+
+.answer-form {
+  list-style: none;
 }
 
 .bg {
