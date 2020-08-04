@@ -1,114 +1,140 @@
-// questions for the quiz
-const STORE = [
-  {
-    question: 'When was the first official American hot sauce produced?',
-    answers: [
-      '1976',
-      '1807',
-      '1853',
-      '1602'
-    ],
-    correctAnswer:
-     '1807'
-  },
-  {
-    question: 'What is the current hottest pepper in the world?',
-    answers: [
-      'Ghost pepper',
-      'Scorpion pepper',
-      'Habeneros',
-      'Carolina Reaper'
-    ],
-    correctAnswer:
-      'Carolina Reaper'
-  },
-  {
-    question: 'What is capsaicin?',
-    answers: [
-      'The oil in hot peppers that causes the feeling of heat',
-      'How hot the peppers look while they are growing',
-      'The amount of nutrients needed to grow the pepper',
-      'how much the pepper seeds can yeild on re-groth'
-    ],
-    correctAnswer: 
-      'The oil in hot peppers that causes the feeling of heat'
-  },
-  {
-    question: 'What was the Bhut Jolokia pepper used for?',
-    answers: [
-      'Home defense',
-      'An extra kick for meals',
-      'Keeping elephants from eating your crops',
-      'Keeping bugs off of your crops'
-    ],
-    correctAnswer: 
-      'Keeping elephants from eating your crops'
-  },
-  {
-    question: 'What does SHU stand for?',
-    answers: [
-      'Super hot unit',
-      'Skeptic hedron uline',
-      'Sensational helix under',
-      'Scoville heat unit'
-    ],
-    correctAnswer: 
-      'Scoville heat unit'
-  },
-  {
-    question: 'What is the 60 second record for most reaper peppers eatin?',
-    answers: [
-      '7',
-      '107 grams',
-      '120 grams',
-      '15'
-    ],
-    correctAnswer:
-      '120 grams'
-  },
-  {
-    question: 'Who invented the Carolina Reaper pepper?',
-    answers: [
-      'Grace Hernandez',
-      'John Knots',
-      'Jocelyn Edwards',
-      'Ed Currie'
-    ],
-    correctAnswer: 
-      'Ed Currie'
-  },
-  {
-    question: 'What is an heirloom pepper seed?',
-    answers: [
-      'A seed that has been mass produced and is stable',
-      'A stable, open breed that has been going for generations',
-      'A very old pepper seed',
-      'A weird magic seed your Grandpa gave to you'
-    ],
-    correctAnswer: 
-      'A stable, open breed that has been going for generations'
-  },
-  {
-    question: 'How tall can a scorpion pepper plant grow?',
-    answers: [
-      '2 feet',
-      '6 feet',
-      '1.5 feet',
-      '4 feet'
-    ],
-    correctAnswer: 
-      '4 feet'
-  },
-  {
-    question: 'What is one benifit eating hot peppers offer?',
-    answers: [
-      'Sweating toxins out of your body',
-      'The oil in the peppers helps your skin health',
-      'Decreasing inflammation of your cells',
-      'Getting sufficient Zink into your diet'
+let currentQuestion = 0;
+let correctAnswers = 0;
+let correctAnswerSelector = 0;
 
-    ],
-    correctAnswer: 
-    'Decreasing inflammation of your cells'
+
+function startQuiz() {
+  $('#start-btn').on('click', function(event) {
+    $('#start-btn').hide();
+    $('#submit-btn').show();
+    $('#startQuiz').hide();
+    $('#questionArea').show();
+    $('.item').show();
+    renderQuestion();
+    increaseCurrentQuestion();
+  });
+}
+
+function renderQuestion() {
+  if(currentQuestion < STORE.length) {
+    $('#questionArea').html(`
+      <div class="top-and-bottom-padding">
+        <p class="indie-flower">${STORE[currentQuestion].question}</p>
+        <form class="indie-flower">
+          <fieldset>
+            <legend>
+              <input type="radio" name="possibleAnswers" value="${STORE[currentQuestion].answers[0]}">
+                <label for="quest1">${STORE[currentQuestion].answers[0]}</label><br>
+              <input type="radio" name="possibleAnswers" value="${STORE[currentQuestion].answers[1]}">
+                <label for="quest2">${STORE[currentQuestion].answers[1]}</label><br>
+              <input type="radio" name="possibleAnswers" value="${STORE[currentQuestion].answers[2]}">
+                <label for="quest3">${STORE[currentQuestion].answers[2]}</label><br>
+              <input type="radio" name="possibleAnswers" value="${STORE[currentQuestion].answers[3]}">
+                <label for="quest4">${STORE[currentQuestion].answers[3]}</label><br>
+            </legend>
+          </fieldset>
+        </form>
+        <p class="indie-flower" id="questionResult"></p>
+      </div>
+    `)
   }
-]
+}
+
+function submitQuestion() {
+  $('#submit-btn').on('click', event => {
+    checkQuestion();
+    increaseAnswerSelector();
+    $('#submit-btn').hide();
+    $('#next-btn').show();
+  })
+}
+
+function checkQuestion() {
+  let selected = $('input:checked');
+  let userAnswer = selected.val();
+  let correctAnswer = STORE[correctAnswerSelector].correctAnswer;
+  if (userAnswer === correctAnswer) {
+    $('#questionResult').text('You got it correct!')
+    increaseCorrectAnswers();
+  }
+  else {
+    $('#questionResult').text(`Almost! the correct answer is "${correctAnswer}"`);
+  }
+}
+
+function nextQuestion() {
+  $('#next-btn').on('click', event => {
+    if (currentQuestion < STORE.length) {
+      $('#next-btn').hide();
+      $('#submit-btn').show();
+      renderQuestion();
+      increaseCurrentQuestion();
+    }
+    else {
+      console.log(correctAnswers);
+      finalResults();
+    }
+  })
+}
+
+function finalResults() {
+  $('.item').hide();
+  $('#next-btn').hide();
+  $('#restart-btn').show();
+  $('#questionArea').hide();
+  $('#finalResultsHeader').text('Here are your test results');
+  let greatScore = `Great job, you got a perfect score! ${correctAnswers} out of 10!`;
+  let okScore = `Not bad! You got ${correctAnswers} out of 10. Want to try again?`;
+  let badScore = `Looks like you could use some practice! You got ${correctAnswers} out of 10. Try again.`;
+  if (correctAnswers === 10) {
+    $('#finalResults').text(greatScore);
+  }
+  else if (correctAnswers >= 5) {
+    $('#finalResults').text(okScore);
+  }
+  else {
+    $('#finalResults').text(badScore);
+  }
+  $('#finalResultsArea').show();
+}
+
+function restartQuiz() {
+  $('#restart-btn').on('click', event => {
+    currentQuestion = 0;
+    correctAnswers = 0;
+    correctAnswerSelector = 0;
+    $('.item').show();
+    $('.currentQuestion').text(1);
+    $('.currentScore').text(0);
+    $('#finalResultsArea').hide();
+    $('#questionArea').show();
+    $('#restart-btn').hide();
+    $('#submit-btn').show();
+    renderQuestion();
+    increaseCurrentQuestion();
+  });
+}
+
+function increaseCurrentQuestion() {
+  currentQuestion++;
+  $('.currentQuestion').text(currentQuestion);
+}
+
+function increaseCorrectAnswers() {
+  correctAnswers++;
+  $('.currentScore').text(correctAnswers);
+}
+
+function increaseAnswerSelector()  {
+  correctAnswerSelector++;
+}
+
+function makeQuiz() {
+  startQuiz();
+  submitQuestion();
+  checkQuestion();
+  nextQuestion();
+  restartQuiz();
+}
+
+$(makeQuiz);
