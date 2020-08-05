@@ -7,22 +7,11 @@
   border: solid black 3px;
 }
 
-.hide {
-  display: none;
-}
-
 fieldset {
   border: 0px;
 }
 
-.bg-dark {
-  background-color: lightslategray;
-}
-
-.bg-light {
-  background-color: lightgray;
-}
-
+/****************************** General styles */
 .center {
   text-align: center;
   justify-content: center;
@@ -32,6 +21,78 @@ fieldset {
 
 .block {
   display: block;
+}
+
+.hide {
+  display: none;
+}
+
+.indie-flower {
+  font-family: 'Indie Flower', cursive;
+  font-weight: bold;
+}
+
+.cursive {
+  font-family: 'Permanent Marker', cursive;
+}
+
+.top-and-bottom-padding {
+  padding: .3em 0 .3em 0;
+}
+
+.margin-top {
+  margin-top: 1em;
+}
+
+body html {
+  height: 100%;
+  margin-bottom: auto;
+}
+
+.bg {
+  background-image: url("images/background-pepper-pile-2.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+}
+
+p {
+  font-size: 1.2em;
+}
+
+.questionText {
+  font-size: 1.2em;
+}
+
+/****************************** Header styles */
+.headerContainer {
+  background-color: #7BBD93;
+  border-radius: 5px;
+}
+
+.currentScore {
+  padding-bottom: .7em;
+  margin-bottom: .4em;
+}
+
+hr {
+  width: 80%;
+}
+
+h1 {
+  margin-bottom: 0;
+}
+
+header h3 {
+  margin-top: 0;
+  font-size: 1.5em;
+}
+
+/****************************** Main container styles */
+.mainContainer {
+  background-color: #D5A77F;
+  border-radius: 5px;
 }
 
 ul {
@@ -52,57 +113,39 @@ ul {
   margin: auto;
 }
 
-.currentScore {
-  padding-bottom: .7em;
-  margin-bottom: .4em;
-}
-
-.indie-flower {
-  font-family: 'Indie Flower', cursive;
-  font-weight: bold;
-}
-
-.cursive {
-  font-family: 'Permanent Marker', cursive;
-}
-
-hr {
-  width: 80%;
-}
-
-h1 {
-  margin-bottom: 0;
-}
-
-header h3 {
-  margin-top: 0;
-}
-
-.top-and-bottom-padding {
-  padding: .3em 0 .3em 0;
-}
-
-footer div {
-  margin-top: .4em;
-  margin-bottom: .4em;
-}
-
-body html {
-  height: 100%;
-}
-
 .answer-form {
   list-style: none;
 }
 
-.bg {
-  background-image: url("images/background-pepper-pile-2.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100%;
+.li-padding {
+  padding-left: 3px;
 }
 
+/****************************** Footer styles */
+.footerContainer {
+  background-color: #7BBD93;
+  border-radius: 5px;
+}
+
+.btn {
+  background-color: #D5A77F;
+  border-radius: 5px;
+  font-size: 1.2em;
+}
+
+footer div {
+  margin-top: .4em;
+  margin-bottom: auto;
+}
+
+button:hover,
+button:active {
+  color: white;
+  background-color: #f5be8e;
+  cursor: pointer;
+}
+
+/****************************** Media Querys */
 @media all and (min-width: 550px) {
   .question-and-answers {
     display: flex;
