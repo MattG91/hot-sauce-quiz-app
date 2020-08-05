@@ -15,7 +15,7 @@ const STORE = [
     answers: [
       'Ghost pepper',
       'Scorpion pepper',
-      'Habeneros',
+      'Habaneros',
       'Carolina Reaper'
     ],
     correctAnswer:
@@ -27,7 +27,7 @@ const STORE = [
       'The oil in hot peppers that causes the feeling of heat',
       'How hot the peppers look while they are growing',
       'The amount of nutrients needed to grow the pepper',
-      'how much the pepper seeds can yeild on re-groth'
+      'how much the pepper seeds can yield on re-growth'
     ],
     correctAnswer: 
       'The oil in hot peppers that causes the feeling of heat'
@@ -46,8 +46,8 @@ const STORE = [
   {
     question: 'What does SHU stand for?',
     answers: [
-      'Super hot unit',
-      'Skeptic hedron uline',
+      'Super-hot unit',
+      'Skeptic helium under',
       'Sensational helix under',
       'Scoville heat unit'
     ],
@@ -55,7 +55,7 @@ const STORE = [
       'Scoville heat unit'
   },
   {
-    question: 'What is the 60 second record for most reaper peppers eatin?',
+    question: 'What is the 60 second record for most reaper peppers eaten?',
     answers: [
       '7',
       '107 grams',
@@ -99,12 +99,12 @@ const STORE = [
       '4 feet'
   },
   {
-    question: 'What is one benifit eating hot peppers offer?',
+    question: 'What is one benefit eating hot peppers offer?',
     answers: [
       'Sweating toxins out of your body',
       'The oil in the peppers helps your skin health',
       'Decreasing inflammation of your cells',
-      'Getting sufficient Zink into your diet'
+      'Getting sufficient protein into your diet'
 
     ],
     correctAnswer: 
