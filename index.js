@@ -1,57 +1,38 @@
 
 /*************************************************Global variables*/ 
+
 let currentQuestion = 0;
 let correctAnswers = 0;
 let correctAnswerSelector = 0;
 
 /*************************************************Event handlers*/ 
-function startQuiz() {
+
+function startQuizHandler() {
   $('#start-btn').on('click', function(event) {
-    $('#start-btn').hide();
-    $('#submit-btn').show();
-    $('#startQuiz').hide();
-    $('#questionArea').show();
-    $('.item').show();
-    renderQuestion();
-    increaseCurrentQuestion();
+    startQuiz();
   });
 }
 
-function submitQuestion() {
+function submitQuestionHandler() {
   $('#submit-btn').on('click', event => {
     checkForActiveAnswer();
   });
 }
 
-function nextQuestion() {
+function nextQuestionHandler() {
   $('#next-btn').on('click', event => {
-    if (currentQuestion < STORE.length) {
-      $('#next-btn').hide();
-      $('#submit-btn').show();
-      renderQuestion();
-      increaseCurrentQuestion();
-    }
-    else {
-      console.log(correctAnswers);
-      finalResults();
-    };
+    questionAreaDecider();
   });
 }
 
-function restartQuiz() {
+function restartQuizHandler() {
   $('#restart-btn').on('click', event => {
-    resetValues();
-    $('.item').show();
-    $('#finalResultsArea').hide();
-    $('#questionArea').show();
-    $('#restart-btn').hide();
-    $('#submit-btn').show();
-    renderQuestion();
-    increaseCurrentQuestion();
+    restartQuiz();
   });
 }
 
 /*************************************************Question generator*/
+
 function renderQuestion() {
   if(currentQuestion < STORE.length) {
     $('#questionArea').html(`
@@ -79,6 +60,17 @@ function renderQuestion() {
 }
 
 /*************************************************Single purpose functions*/ 
+
+function startQuiz() {
+  $('#start-btn').hide();
+  $('#submit-btn').show();
+  $('#startQuiz').hide();
+  $('#questionArea').show();
+  $('.item').show();
+  renderQuestion();
+  increaseCurrentQuestion();
+}
+
 function checkQuestion(userAnswer) {
   let correctAnswer = STORE[correctAnswerSelector].correctAnswer;
   if (userAnswer === correctAnswer) {
@@ -103,6 +95,18 @@ function checkForActiveAnswer() {
   }
 }
 
+function questionAreaDecider() {
+  if (currentQuestion < STORE.length) {
+    $('#next-btn').hide();
+    $('#submit-btn').show();
+    renderQuestion();
+    increaseCurrentQuestion();
+  }
+  else {
+    finalResults();
+  };
+}
+
 function finalResults() {
   $('.item').hide();
   $('#next-btn').hide();
@@ -122,6 +126,17 @@ function finalResults() {
     $('#finalResults').text(badScore);
   }
   $('#finalResultsArea').show();
+}
+
+function restartQuiz() {
+  resetValues();
+  $('.item').show();
+  $('#finalResultsArea').hide();
+  $('#questionArea').show();
+  $('#restart-btn').hide();
+  $('#submit-btn').show();
+  renderQuestion();
+  increaseCurrentQuestion();
 }
 
 function resetValues() {
@@ -147,13 +162,16 @@ function increaseAnswerSelector()  {
 }
 
 /*************************************************Initializing function*/ 
+
 function makeQuiz() {
-  startQuiz();
-  submitQuestion();
-  nextQuestion();
-  restartQuiz();
+  startQuizHandler();
+  submitQuestionHandler();
+  nextQuestionHandler();
+  restartQuizHandler();
 }
 
 $(makeQuiz);
+
+
 
 
