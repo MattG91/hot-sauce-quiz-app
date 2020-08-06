@@ -19,15 +19,7 @@ function startQuiz() {
 
 function submitQuestion() {
   $('#submit-btn').on('click', event => {
-    let selected = $('input:checked');
-    let userAnswer = selected.val();
-    if (userAnswer) {
-      checkQuestion(userAnswer);
-      $('#submit-btn').hide();
-      $('#next-btn').show();
-    } else {
-      alert('Please select an answer');
-    }
+    checkForActiveAnswer();
   });
 }
 
@@ -42,7 +34,7 @@ function nextQuestion() {
     else {
       console.log(correctAnswers);
       finalResults();
-    }
+    };
   });
 }
 
@@ -88,7 +80,6 @@ function renderQuestion() {
 
 /*************************************************Single purpose functions*/ 
 function checkQuestion(userAnswer) {
-  
   let correctAnswer = STORE[correctAnswerSelector].correctAnswer;
   if (userAnswer === correctAnswer) {
     $('#questionResult').text('You got it correct!')
@@ -98,6 +89,18 @@ function checkQuestion(userAnswer) {
     $('#questionResult').text(`Almost! the correct answer is "${correctAnswer}"`);
   }
   increaseAnswerSelector();
+}
+
+function checkForActiveAnswer() {
+  let selected = $('input:checked');
+  let userAnswer = selected.val();
+  if (userAnswer) {
+      checkQuestion(userAnswer);
+      $('#submit-btn').hide();
+      $('#next-btn').show();
+  } else {
+      alert('Please select an answer');
+  }
 }
 
 function finalResults() {
@@ -129,7 +132,6 @@ function resetValues() {
   $('.currentScore').text(0);
 }
 
-
 function increaseCurrentQuestion() {
   currentQuestion++;
   $('.currentQuestion').text(currentQuestion);
@@ -153,4 +155,5 @@ function makeQuiz() {
 }
 
 $(makeQuiz);
+
 
