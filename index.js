@@ -1,32 +1,28 @@
 
-/*************************************************Global variables*/ 
 
-let currentQuestion = 0;
-let correctAnswers = 0;
-let correctAnswerSelector = 0;
 
 /*************************************************Event handlers*/ 
 
 function startQuizHandler() {
-  $('#start-btn').on('click', function(event) {
+  $('#start-btn').on('click', () => {
     startQuiz();
   });
 }
 
 function submitQuestionHandler() {
-  $('#submit-btn').on('click', event => {
+  $('#submit-btn').on('click', () => {
     checkForActiveAnswer();
   });
 }
 
 function nextQuestionHandler() {
-  $('#next-btn').on('click', event => {
+  $('#next-btn').on('click', () => {
     questionAreaDecider();
   });
 }
 
 function restartQuizHandler() {
-  $('#restart-btn').on('click', event => {
+  $('#restart-btn').on('click', () => {
     restartQuiz();
   });
 }
@@ -34,58 +30,61 @@ function restartQuizHandler() {
 /*************************************************Question generator*/
 
 function renderQuestion() {
-  if(currentQuestion < STORE.length) {
-    $('#questionArea').html(`
-      <div class="top-and-bottom-padding">
-        <p class="indie-flower">${STORE[currentQuestion].question}</p>
-        <hr>
-        <form class="indie-flower">
-          <fieldset class="margin-top">
-            <legend>
-              <input type="radio" name="possibleAnswers" value="${STORE[currentQuestion].answers[0]}" required>
-                <label class="questionText li-padding" for="quest1">${STORE[currentQuestion].answers[0]}</label><br>
-              <input type="radio" name="possibleAnswers" value="${STORE[currentQuestion].answers[1]}">
-                <label class="questionText li-padding" for="quest2">${STORE[currentQuestion].answers[1]}</label><br>
-              <input type="radio" name="possibleAnswers" value="${STORE[currentQuestion].answers[2]}">
-                <label class="questionText li-padding" for="quest3">${STORE[currentQuestion].answers[2]}</label><br>
-              <input type="radio" name="possibleAnswers" value="${STORE[currentQuestion].answers[3]}">
-                <label class="questionText li-padding" for="quest4">${STORE[currentQuestion].answers[3]}</label><br>
-            </legend>
-          </fieldset>
-        </form>
-        <p class="indie-flower" id="questionResult"></p>
-      </div>
-    `)
+  if (STORE.currentQuestion >= STORE.questions.length) {
+    return ""
   }
+  const answerNodes = STORE.questions[STORE.currentQuestion].answers.map(renderOption);
+  $('#questionArea').html(`
+    <div class="top-and-bottom-padding">
+      ${renderCurrentQuestion()}
+      <hr>
+      <form class="indie-flower">
+        <fieldset class="margin-top">
+          <legend>
+            ${answerNodes.join("")}
+          </legend>
+        </fieldset>
+      </form>
+      <p class="indie-flower" id="questionResult"></p>
+    </div>
+  `);
 }
 
 /*************************************************Single purpose functions*/ 
-
+//<p class="indie-flower">${STORE.questions[STORE.currentQuestion].question}</p>
 function startQuiz() {
   $('#start-btn').hide();
   $('#submit-btn').show();
   $('#startQuiz').hide();
   $('#questionArea').show();
   $('.item').show();
+  console.log(STORE.currentQuestion);
   renderQuestion();
   increaseCurrentQuestion();
 }
 
+function renderCurrentQuestion() {
+  return `<p class="indie-flower">${STORE.questions[STORE.currentQuestion].question}</p>`
+}
+
+function renderOption(answer) {
+  return `<input type="radio" name="possibleAnswers" value="${answer}" required>
+  <label class="questionText li-padding" for="quest1">${answer}</label><br></br>`;
+}
+
 function checkQuestion(userAnswer) {
-  let correctAnswer = STORE[correctAnswerSelector].correctAnswer;
+  const correctAnswer = STORE.questions[STORE.correctAnswerSelector].correctAnswer;
   if (userAnswer === correctAnswer) {
     $('#questionResult').text('You got it correct!')
     increaseCorrectAnswers();
-  }
-  else {
+  } else {
     $('#questionResult').text(`Almost! the correct answer is "${correctAnswer}"`);
   }
   increaseAnswerSelector();
 }
 
 function checkForActiveAnswer() {
-  let selected = $('input:checked');
-  let userAnswer = selected.val();
+  const userAnswer = $('input:checked').val();
   if (userAnswer) {
       checkQuestion(userAnswer);
       $('#submit-btn').hide();
@@ -96,35 +95,36 @@ function checkForActiveAnswer() {
 }
 
 function questionAreaDecider() {
-  if (currentQuestion < STORE.length) {
+  if (STORE.currentQuestion < STORE.questions.length) {
     $('#next-btn').hide();
     $('#submit-btn').show();
     renderQuestion();
     increaseCurrentQuestion();
-  }
-  else {
-    finalResults();
+  } else {
+    showFinalResults();
   };
 }
 
-function finalResults() {
+function decideFinalResults() {
+  let greatScore = `Great job, you got a perfect score! ${STORE.correctAnswers} out of 10!`;
+  let okScore = `Not bad! You got ${STORE.correctAnswers} out of 10. Want to try again?`;
+  let badScore = `Looks like you could use some practice! You got ${STORE.correctAnswers} out of 10. Try again!`;
+  if (STORE.correctAnswers === STORE.MAX_QUESTIONS) {
+    $('#finalResults').text(greatScore);
+  } else if (STORE.correctAnswers >= STORE.okScoreNumber) {
+    $('#finalResults').text(okScore);
+  } else {
+    $('#finalResults').text(badScore);
+  }
+}
+
+function showFinalResults() {
   $('.item').hide();
   $('#next-btn').hide();
   $('#restart-btn').show();
   $('#questionArea').hide();
   $('#finalResultsHeader').text('Here are your test results');
-  let greatScore = `Great job, you got a perfect score! ${correctAnswers} out of 10!`;
-  let okScore = `Not bad! You got ${correctAnswers} out of 10. Want to try again?`;
-  let badScore = `Looks like you could use some practice! You got ${correctAnswers} out of 10. Try again!`;
-  if (correctAnswers === 10) {
-    $('#finalResults').text(greatScore);
-  }
-  else if (correctAnswers >= 5) {
-    $('#finalResults').text(okScore);
-  }
-  else {
-    $('#finalResults').text(badScore);
-  }
+  decideFinalResults();
   $('#finalResultsArea').show();
 }
 
@@ -140,25 +140,25 @@ function restartQuiz() {
 }
 
 function resetValues() {
-  currentQuestion = 0;
-  correctAnswers = 0;
-  correctAnswerSelector = 0;
+  STORE.currentQuestion = 0;
+  STORE.correctAnswers = 0;
+  STORE.correctAnswerSelector = 0;
   $('.currentQuestion').text(1);
   $('.currentScore').text(0);
 }
 
 function increaseCurrentQuestion() {
-  currentQuestion++;
-  $('.currentQuestion').text(currentQuestion);
+  STORE.currentQuestion++;
+  $('.currentQuestion').text(STORE.currentQuestion);
 }
 
 function increaseCorrectAnswers() {
-  correctAnswers++;
-  $('.currentScore').text(correctAnswers);
+  STORE.correctAnswers++;
+  $('.currentScore').text(STORE.correctAnswers);
 }
 
 function increaseAnswerSelector()  {
-  correctAnswerSelector++;
+  STORE.correctAnswerSelector++;
 }
 
 /*************************************************Initializing function*/ 
@@ -171,6 +171,7 @@ function makeQuiz() {
 }
 
 $(makeQuiz);
+
 
 
 
