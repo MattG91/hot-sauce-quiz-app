@@ -1,6 +1,5 @@
 
 
-
 /*************************************************Event handlers*/ 
 
 function startQuizHandler() {
@@ -51,14 +50,19 @@ function renderQuestion() {
 }
 
 /*************************************************Single purpose functions*/ 
-//<p class="indie-flower">${STORE.questions[STORE.currentQuestion].question}</p>
+function checkSubmit(e) {
+  if(e && e.keyCode == 13) {
+    checkForActiveAnswer();
+    $('#next-btn').focus();
+  }
+}
+
 function startQuiz() {
   $('#start-btn').hide();
   $('#submit-btn').show();
   $('#startQuiz').hide();
   $('#questionArea').show();
   $('.item').show();
-  console.log(STORE.currentQuestion);
   renderQuestion();
   increaseCurrentQuestion();
 }
@@ -68,7 +72,7 @@ function renderCurrentQuestion() {
 }
 
 function renderOption(answer) {
-  return `<input type="radio" name="possibleAnswers" value="${answer}" required>
+  return `<input type="radio" name="possibleAnswers" value="${answer}" onKeyPress="return checkSubmit(event)" required>
   <label class="questionText li-padding" for="quest1">${answer}</label><br></br>`;
 }
 
@@ -105,7 +109,12 @@ function questionAreaDecider() {
   };
 }
 
-function decideFinalResults() {
+function showFinalResults() {
+  $('.item').hide();
+  $('#next-btn').hide();
+  $('#restart-btn').show();
+  $('#questionArea').hide();
+  $('#finalResultsHeader').text('Here are your test results');
   let greatScore = `Great job, you got a perfect score! ${STORE.correctAnswers} out of 10!`;
   let okScore = `Not bad! You got ${STORE.correctAnswers} out of 10. Want to try again?`;
   let badScore = `Looks like you could use some practice! You got ${STORE.correctAnswers} out of 10. Try again!`;
@@ -116,15 +125,6 @@ function decideFinalResults() {
   } else {
     $('#finalResults').text(badScore);
   }
-}
-
-function showFinalResults() {
-  $('.item').hide();
-  $('#next-btn').hide();
-  $('#restart-btn').show();
-  $('#questionArea').hide();
-  $('#finalResultsHeader').text('Here are your test results');
-  decideFinalResults();
   $('#finalResultsArea').show();
 }
 
@@ -171,8 +171,3 @@ function makeQuiz() {
 }
 
 $(makeQuiz);
-
-
-
-
-
