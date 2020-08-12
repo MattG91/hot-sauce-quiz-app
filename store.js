@@ -1,4 +1,10 @@
 const STORE = {
+  currentQuestion: 0,
+  correctAnswers: 0,
+  correctAnswerSelector: 0,
+  MAX_QUESTIONS: 10,
+  okScoreNumber: 5,
+  
   questions: [
     {
       question: 'When was the first official American hot sauce produced?',
@@ -111,10 +117,5 @@ const STORE = {
       correctAnswer: 
       'Decreasing inflammation of your cells'
     }
-  ],
-  currentQuestion: 0,
-  correctAnswers: 0,
-  correctAnswerSelector: 0,
-  MAX_QUESTIONS: 10,
-  okScoreNumber: 5
+  ]
 };
